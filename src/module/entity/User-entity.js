@@ -31,3 +31,4 @@ export const UserEntity = new EntitySchema({
     }
   }
 });
+

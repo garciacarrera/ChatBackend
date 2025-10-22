@@ -1,4 +1,4 @@
-import Joi from "joi";
+import joi from "joi";
 
 const userSchema = joi.object({
   username: joi.string().required(),
