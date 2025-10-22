@@ -1,10 +1,14 @@
-import express from "express";
+import express from 'express'
+import {envs} from '../src/configuration/envs.js'
 
-const app = express()
+
+const app =express();
+
 
 app.use(express.json())
 
 
-app.set('port', 3000)
+app.set('port', envs.PORT)
+
 
 export default app;

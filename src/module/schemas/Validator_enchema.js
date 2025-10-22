@@ -1,4 +1,4 @@
-const joi = require("joi");
+import Joi from "joi";
 
 const userSchema = joi.object({
   username: joi.string().required(),
@@ -20,9 +20,9 @@ const participationSchema = joi.object({
   chatId: joi.number().integer().required()
 });
 
-module.exports = {
-  userSchema,
-  chatSchema,
+export const entidades ={
+  participationSchema,
   mensajeSchema,
-  participationSchema
-};
+  chatSchema,
+  userSchema,
+}
