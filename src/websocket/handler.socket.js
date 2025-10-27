@@ -1,4 +1,4 @@
-const socketHandler = (socket) =>{
+export const socketHandler = (socket) =>{
     //Evento "Message" con la capacidad de brindar un mensaje(muestra los datos del mensaje)
     socket.on("message",(data) =>{
         console.log("Mensaje:",data)
@@ -20,5 +20,3 @@ const socketHandler = (socket) =>{
         socket.emit("login","Conexion de usuario realizada correctamente")
     })
 }
-
-export default socketHandler
