@@ -2,6 +2,7 @@ import app from "./app.js";
 import { envs } from "./configuration/envs.js";
 import http from "http"
 import { Server } from "socket.io";
+import socketHandler from "./websocket/handler.socket.js";
 
 
 //Creamos un servidor usando el archivo "app.js"
@@ -17,6 +18,8 @@ const main = () =>{
         console.log("Conexion exitosa")
 
         console.log(socket)
+
+        socketHandler(socket)
     })
 
     server.listen(app.get('port'))
