@@ -1,12 +1,21 @@
 import { Router } from "express";
 import { validate } from "../middlewares/validator.middleware.js";
 
-import { userSchema } from "./schemas/Validator_enchema.js";
-import { usercontroller } from "./user.controller.js";
+import { userSchema } from "../module/schemas/Validator_enchema.js";
+import { userController } from "./user.controller.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
 
-/**
- * const userrouter = Router(); 
+const userRouter = Router();
 
-userrouter.post('/users', validate(userSchema), usercontroller.create);
-export default userrouter;
- */
+userRouter.post('/user', validate(userSchema), userController.register)
+
+userRouter.post('/user/login', userController.login)
+
+userRouter.get('/users', authMiddleware ,userController.findAll)
+
+export default userRouter;
+
+
+ 
+ 
+
