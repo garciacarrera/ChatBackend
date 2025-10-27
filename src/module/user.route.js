@@ -1,15 +1,22 @@
 
 import { Router } from "express";
 import { validate } from "../middlewares/validator.middleware.js";
-import { userSchema } from "./schemas/Validator_enchema.js";
-import { usercontroller } from "./user.controller.js";
-import { userController } from './user.controller.js';
-import authMiddleware from '../../middlewares/auth.middleware.js'
 
-const userRoute = Router();
+import { userSchema } from "../module/schemas/Validator_enchema.js";
+import { userController } from "./user.controller.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
 
-userRoute.post('/register', validate(createUser), userController.register);
-userRoute.post('/login', validate(loginUser), userController.login);
-userRoute.get('/users', authMiddleware, userController.findAll);
+const userRouter = Router();
 
-export default userRoute;
+userRouter.post('/user', validate(userSchema), userController.register)
+
+userRouter.post('/user/login', userController.login)
+
+userRouter.get('/users', authMiddleware ,userController.findAll)
+
+userRouter.post('/register', validate(createUser), userController.register);
+userRouter.post('/login', validate(loginUser), userController.login);
+userRouter.get('/users', authMiddleware, userController.findAll);
+
+export default userRouter;
+
