@@ -1,4 +1,4 @@
-export const socketHandler = (socket) =>{
+const socketHandler = (socket) =>{
     //Evento "Message" con la capacidad de brindar un mensaje(muestra los datos del mensaje)
     socket.on("message",(data) =>{
         console.log("Mensaje:",data)
@@ -21,4 +21,4 @@ export const socketHandler = (socket) =>{
     })
 }
 
-
+export default socketHandler
