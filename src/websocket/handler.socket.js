@@ -21,7 +21,5 @@ const socketHandler = (socket) =>{
     })
 }
 
-module.exports = {socketHandler}
-
-
+export default socketHandler
 

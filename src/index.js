@@ -1,14 +1,13 @@
 import app from "./app.js";
 import { envs } from "./configuration/envs.js";
+import http from "http"
+import { Server } from "socket.io";
 
-//Creamos una clase http que requiere 'http'
-const http = require("http")
 
 //Creamos un servidor usando el archivo "app.js"
 const server = http.createServer((app))
 
 //Llamamos a la clase 'Server' de socket.io para instanciar el servidor
-const { Server } = require("socket.io")
 const io = new Server(server)
 
 const main = () =>{
