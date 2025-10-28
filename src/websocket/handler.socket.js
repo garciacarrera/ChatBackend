@@ -1,20 +1,20 @@
-import pkg from 'signale';
-const { Signale } = pkg;
-
-export const socketHandler = (socket, io) => {
-    const logger = new Signale({ scope: 'Socket' });
+export const socketHandler = (socket) => {
     
     socket.on("message", (data) => {
-        logger.info('Mensaje recibido:', data);
+        console.log('Mensaje recibido:', data);
         socket.emit("message", "Mensaje procesado");
     });
     
     socket.on("login", (userData) => {
-        logger.info('Usuario logueado:', userData);
+        console.log('Usuario logueado:', userData);
         socket.emit("login", "Conexión exitosa");
     });
     
-    socket.on("disconnect", (reason) => {
-        logger.warn(`Cliente desconectado: ${socket.id}`);
+    socket.on("disconnected", (reason) => {
+        console.log(`
+            Cliente desconectado: ${socket.id}
+            Razon: ${reason}    
+        `);
+        socket.emit('Razon:', reason);
     });
 };

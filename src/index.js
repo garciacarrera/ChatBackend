@@ -23,7 +23,7 @@ const main = async () => {
         
         io.on("connection", (socket) => {
             logger.info(`Cliente conectado: ${socket.id}`);
-            socketHandler(socket, io);
+            socketHandler(socket);
         });
         
     } catch (error) {
