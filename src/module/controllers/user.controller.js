@@ -1,8 +1,8 @@
 import { request, response } from 'express';
 import * as bcrypt from 'bcrypt';
-import AppDatasource from '../../src/provider/datasource-provider.js';
+import AppDatasource from '../../provider/datasource-provider.js';
 import jwt from 'jsonwebtoken';
-import { envs } from '../../src/configuration/envs.js';
+import { envs } from '../../configuration/envs.js';
 
 const repo = AppDatasource.getRepository('User');
 

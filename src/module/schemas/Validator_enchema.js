@@ -12,7 +12,8 @@ export const chatSchema = joi.object({
 export const mensajeSchema = joi.object({
   content: joi.string().required(),
   userId: joi.number().integer().required(),
-  chatId: joi.number().integer().required()
+  chatId: joi.number().integer().required(),
+  
 });
 
 export const participationSchema = joi.object({
