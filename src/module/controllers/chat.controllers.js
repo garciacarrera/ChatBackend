@@ -4,7 +4,7 @@ import { chatSchema, participationSchema } from '../schemas/Validator_enchema.js
 
 
 const create = async (req = request, res = response) => {
-  const { name,  } = req.body;
+  const { name } = req.body;
 
   try {
     const chatRepo = AppDatasource.getRepository('Chat');

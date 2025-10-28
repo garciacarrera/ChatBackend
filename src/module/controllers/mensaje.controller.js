@@ -32,8 +32,8 @@ const send = async (req = request, res = response) => {
     // Create message
     const message = await mensajeRepo.save({
       content,
-      chatId,
-      authorId: userId
+      userId,
+      chatId
     });
 
     return res.status(201).json({ ok: true, data: message });

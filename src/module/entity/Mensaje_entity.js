@@ -24,10 +24,10 @@ export const MensajeEntity = new EntitySchema({
    
   },
   relations: {
-    author: {
+    user: {
       type: "many-to-one",
       target: "User",
-      joinColumn: { name: "authorId" },
+      joinColumn: { name: "userId" },
       nullable: false,
       onDelete: "CASCADE"
     },
