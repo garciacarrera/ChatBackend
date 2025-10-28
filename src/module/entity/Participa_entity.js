@@ -8,6 +8,14 @@ export const PartiEntity = new EntitySchema({
       primary: true,
       type: "int",
       generated: true
+    },
+    userId: {
+      type: "int",
+      nullable: false
+    },
+    chatId: {
+      type: "int",
+      nullable: false
     }
   },
   relations: {
