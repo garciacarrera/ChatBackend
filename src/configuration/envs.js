@@ -12,7 +12,6 @@ const envsSchema = joi
     DB_PASS: joi.string().allow('').optional(),
     DB_HOST: joi.string().required(),
     JWT_SECRET: joi.string().required(),
-
   })
   .unknown(true);
 
@@ -29,5 +28,6 @@ export const envs = {
   DB_PASSWORD: value.DB_PASS,     // antes: DB_PASS
   DB_HOST: value.DB_HOST,
   JWT_SECRET: value.JWT_SECRET
+
 };
 
