@@ -1,6 +1,6 @@
 import express from 'express'
 import {envs} from '../src/configuration/envs.js'
-import userRouter from '../src/module/';
+import userRouter from '../src/module/routes/user.route.js';
 import chatRouter from '../src/module/routes/chat.route.js';
 import mensajeRouter from '../src/module/routes/mensaje.route.js'
 

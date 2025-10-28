@@ -1,33 +1,48 @@
 import { request, response } from 'express';
-import AppDatasource from '../providers/datasource.provider.js';
+import AppDatasource from '../../provider/datasource-provider.js';
 import { mensajeSchema } from '../schemas/Validator_enchema.js';
 
-
 const send = async (req = request, res = response) => {
-  
   const { content, userId, chatId } = req.body;
+
+  // Validate input
+  if (!content || !userId || !chatId) {
+    return res.status(400).json({ 
+      ok: false, 
+      message: 'content, userId, and chatId are required' 
+    });
+  }
 
   try {
     const mensajeRepo = AppDatasource.getRepository('Mensaje');
-    const participaRepo = AppDatasource.getRepository('Participa');
-
-    const participation = await participaRepo.findOne({ where: { chatId, userId } });
+    const ChatRepo = AppDatasource.getRepository('Participa');
+    
+    // Check participation
+    const participation = await ChatRepo.findOne({ 
+      where: { chatId, userId } 
+    });
+    
     if (!participation) {
-      return res.status(403).json({ ok: false, message: 'User not participant of chat' });
+      return res.status(403).json({ 
+        ok: false, 
+        message: 'User not participant of chat' 
+      });
     }
 
+    // Create message
     const message = await mensajeRepo.save({
       content,
       chatId,
-      authorId: userId,
-      createdAt: new Date(),
-      type: 'text'
+      authorId: userId
     });
 
     return res.status(201).json({ ok: true, data: message });
   } catch (err) {
     console.error('send message error', err);
-    return res.status(500).json({ ok: false, message: err.message || 'Error sending message' });
+    return res.status(500).json({ 
+      ok: false, 
+      message: 'Error sending message' 
+    });
   }
 };
 

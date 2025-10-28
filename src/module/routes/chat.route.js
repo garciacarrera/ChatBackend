@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { chatController } from '../controllers/chat.controllers.js';
-import { validate } from "../middlewares/validator.middleware.js";
+import { validate } from "../../middlewares/validator.middleware.js";
 import { chatSchema } from '../schemas/Validator_enchema.js';
 
 const chatRouter = Router();

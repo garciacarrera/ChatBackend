@@ -1,14 +1,14 @@
 import { request, response } from 'express';
-import AppDatasource from '../providers/datasource.provider.js';
-import { chatSchema, participationSchema } from './validation/schemas.js';
+import AppDatasource from '../../provider/datasource-provider.js';
+import { chatSchema, participationSchema } from '../schemas/Validator_enchema.js';
 
 
 const create = async (req = request, res = response) => {
-  const { name, ownerId } = req.body;
+  const { name,  } = req.body;
 
   try {
     const chatRepo = AppDatasource.getRepository('Chat');
-    const chat = await chatRepo.save({ name, ownerId: ownerId || null, createdAt: new Date() });
+    const chat = await chatRepo.save({ name });
     return res.status(201).json({ ok: true, data: chat });
   } catch (err) {
     console.error('create chat error', err);
@@ -26,7 +26,7 @@ const findAll = async (req = request, res = response) => {
     return res.status(500).json({ ok: false, message: err.message || 'Error fetching chats' });
   }
 };
-
+//obteniendo un chat por id
 const findOne = async (req = request, res = response) => {
   const { id } = req.params;
   try {
@@ -40,7 +40,6 @@ const findOne = async (req = request, res = response) => {
   }
 };
 
-
 const join = async (req = request, res = response) => {
   const { id: chatId } = req.params;
   const { userId } = req.body;
@@ -53,17 +52,31 @@ const join = async (req = request, res = response) => {
 
   try {
     const participaRepo = AppDatasource.getRepository('Participa');
-    const existing = await participaRepo.findOne({ where: { chatId: payload.chatId, userId: payload.userId } });
+    
+    // Buscar usando relaciones
+    const existing = await participaRepo.findOne({ 
+      where: { 
+        user: { id: payload.userId },
+        chat: { id: payload.chatId }
+      } 
+    });
+    
     if (existing) return res.status(200).json({ ok: true, data: existing, message: 'Already joined' });
 
-    const participation = await participaRepo.save({ chatId: payload.chatId, userId: payload.userId, role: 'member', joinedAt: new Date() });
+    // Crear usando relaciones
+    const participation = participaRepo.create({
+      user: { id: payload.userId },
+      chat: { id: payload.chatId }
+    });
+    
+    await participaRepo.save(participation);
+    
     return res.status(201).json({ ok: true, data: participation });
   } catch (err) {
     console.error('join chat error', err);
     return res.status(500).json({ ok: false, message: err.message || 'Error joining chat' });
   }
 };
-
 
 const leave = async (req = request, res = response) => {
   const { id: chatId } = req.params;
@@ -77,7 +90,18 @@ const leave = async (req = request, res = response) => {
 
   try {
     const participaRepo = AppDatasource.getRepository('Participa');
-    await participaRepo.delete({ chatId: payload.chatId, userId: payload.userId });
+    
+    const participation = await participaRepo.findOne({
+      where: {
+        user: { id: payload.userId },
+        chat: { id: payload.chatId }
+      }
+    });
+    
+    if (participation) {
+      await participaRepo.remove(participation);
+    }
+    
     return res.status(200).json({ ok: true, message: 'You have left the chat' });
   } catch (err) {
     console.error('leave chat error', err);

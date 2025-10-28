@@ -12,24 +12,31 @@ export const MensajeEntity = new EntitySchema({
     content: {
       type: "varchar",
       nullable: true
-    }
+    },
+    userId: {
+      type: "int",
+      nullable: false
+    },
+    chatId: {
+      type: "int",
+      nullable: false
+    },
+   
   },
   relations: {
-    user: {
+    author: {
       type: "many-to-one",
       target: "User",
-      joinColumn: { name: "userId" },
+      joinColumn: { name: "authorId" },
       nullable: false,
-      onDelete: "CASCADE",
-      inverseSide: "mensajes"
+      onDelete: "CASCADE"
     },
     chat: {
       type: "many-to-one",
       target: "Chat",
       joinColumn: { name: "chatId" },
       nullable: false,
-      onDelete: "CASCADE",
-      inverseSide: "mensajes"
+      onDelete: "CASCADE"
     }
   }
 });
