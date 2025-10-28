@@ -1,22 +1,20 @@
-export const socketHandler = (socket) =>{
-    //Evento "Message" con la capacidad de brindar un mensaje(muestra los datos del mensaje)
-    socket.on("message",(data) =>{
-        console.log("Mensaje:",data)
+import pkg from 'signale';
+const { Signale } = pkg;
 
-        socket.emit("message","Mensaje Procesado")
-    })
+export const socketHandler = (socket, io) => {
+    const logger = new Signale({ scope: 'Socket' });
     
-    //Evento para la desconexion de usuarios, o en caso de falta de conexion
-    socket.on("disconnect",()=>{
-        console.log("No hay un usuario conectado")
-
-        socket.emit("disconnect","Desconexion")
-    })
-
-    //Evento de logueo de usuarios
-    socket.on("login", ()=>{
-        console.log("Usuario conectado correctamente")
-
-        socket.emit("login","Conexion de usuario realizada correctamente")
-    })
-}
+    socket.on("message", (data) => {
+        logger.info('Mensaje recibido:', data);
+        socket.emit("message", "Mensaje procesado");
+    });
+    
+    socket.on("login", (userData) => {
+        logger.info('Usuario logueado:', userData);
+        socket.emit("login", "Conexión exitosa");
+    });
+    
+    socket.on("disconnect", (reason) => {
+        logger.warn(`Cliente desconectado: ${socket.id}`);
+    });
+};
