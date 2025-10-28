@@ -58,7 +58,6 @@ const findByChat = async (req = request, res = response) => {
     const mensajeRepo = AppDatasource.getRepository('Mensaje');
     const [messages, total] = await mensajeRepo.findAndCount({
       where: { chatId },
-      order: { createdAt: order },
       skip,
       take: limit
     });
