@@ -81,7 +81,7 @@ const remove = async (req = request, res = response) => {
     const message = await mensajeRepo.findOne({ where: { id } });
     if (!message) return res.status(404).json({ ok: false, message: 'Message not found' });
 
-    const isAuthor = String(message.authorId) === String(userId);
+    const isAuthor = String(message.userId) === String(userId);
     
 
     if (!isAuthor) return res.status(403).json({ ok: false, message: 'Not allowed to delete this message' });
