@@ -1,14 +1,20 @@
 import express from 'express'
 import {envs} from '../src/configuration/envs.js'
-import userrouter from './module/user.route.js';
+import userRouter from '../src/module/';
+import chatRouter from '../src/module/routes/chat.route.js';
+import mensajeRouter from '../src/module/routes/mensaje.route.js'
 
 const app =express();
 
 
-app.use(express.json())
+app.use(express.json());
 
 
-app.set('port', envs.PORT)
-app.use(userrouter);
+
+app.use('/api/users', userRouter);
+app.use('/api/chats', chatRouter);
+app.use('/api/messages', mensajeRouter);
+app.set('port', envs.PORT);
+app.use(userRouter);
 
 export default app;

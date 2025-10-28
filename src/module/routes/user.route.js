@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { validate } from "../middlewares/validator.middleware.js";
+import { validate } from "../../middlewares/validator.middleware.js";
 
-import { userSchema } from "../module/schemas/Validator_enchema.js";
+import { userSchema } from "../schemas/Validator_enchema.js";
 import { userController } from "./user.controller.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
+import authMiddleware from "../../middlewares/auth.middleware.js";
 
 const userRouter = Router();
 
